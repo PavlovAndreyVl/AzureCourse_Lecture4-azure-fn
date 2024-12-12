@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: FunctionsStartup(typeof(Lecture4_azure_fn.Startup))]
+
 namespace Lecture4_azure_fn
 {
     public class Startup : FunctionsStartup
@@ -15,7 +17,7 @@ namespace Lecture4_azure_fn
         {
             var kvUrl = new Uri(Environment.GetEnvironmentVariable("KeyVaultUrl"));
             var secretClient = new SecretClient(kvUrl, new DefaultAzureCredential());
-            var cs = secretClient.GetSecret("connection").Value.Value;
+            //var cs = secretClient.GetSecret("connection").Value.Value;
             //builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(cs));
 
         }

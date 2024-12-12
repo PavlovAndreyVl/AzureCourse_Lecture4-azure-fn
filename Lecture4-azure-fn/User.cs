@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lecture4_azure_fn
 {
-    public class User
+    public record User
     {
         public int Id { get; set; }
         public string Name { get; set; }
