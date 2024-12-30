@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.ApplicationInsights;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 
 namespace Lecture4_azure_fn
 {
@@ -35,6 +37,7 @@ namespace Lecture4_azure_fn
             ILogger log, 
             int? id)
         {
+
             if (id.HasValue)
             {
                 log.LogInformation($"GetUsers invoked with id = {id}");
@@ -45,8 +48,9 @@ namespace Lecture4_azure_fn
 
                 return new OkObjectResult(user);
             }
-
+            log.LogInformation($"Function invoked to get all users. Return {_users.Count} users");
             return new OkObjectResult(_users);
         }
+
     }
 }

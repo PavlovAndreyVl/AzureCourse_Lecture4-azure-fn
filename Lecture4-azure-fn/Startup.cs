@@ -1,6 +1,9 @@
 ﻿using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +18,11 @@ namespace Lecture4_azure_fn
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var kvUrl = new Uri(Environment.GetEnvironmentVariable("KeyVaultUrl"));
-            var secretClient = new SecretClient(kvUrl, new DefaultAzureCredential());
-            //var cs = secretClient.GetSecret("connection").Value.Value;
-            //builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(cs));
-
+            var config = builder.GetContext().Configuration;
+            builder.Services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = config["ApplicationInsights:InstrumentationKey"];
+            });
         }
     }
 }
